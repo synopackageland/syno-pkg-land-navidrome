@@ -38,7 +38,7 @@ name from the gateway. Before each protected request, it uses the upstream
 native API privately to provision the gateway-verified DSM identity with an explicit
 `isAdmin` value. The first ordinary DSM user is created as an ordinary user.
 The adapter synchronizes every protected request to the role asserted by the
-gateway. SDK 0.21.0 retains that administrator bit in an existing `dsm-users`
+gateway. SDK 0.22.0 retains that administrator bit in an existing `dsm-users`
 session; DSM role changes take effect after fresh sign-in/session expiry
 (15 minutes here). This is a published SDK limitation; the adapter does not
 claim immediate detection of host group changes. An API failure prevents forwarding. No database schema is patched.
@@ -97,7 +97,7 @@ upstream process exits. Restart and upgrades retain the database, bindings,
 passwords, playlists and shares. The packaging version is `0.64.2-0002` (upstream
 version plus four-digit build); same-version packaging upgrades increment it.
 
-SDK 0.21.0 retains Docker named data volumes even on uninstall's delete-data
+SDK 0.22.0 retains Docker named data volumes even on uninstall's delete-data
 choice and reports `COMPOSE_DATA_RETAINED`. It does not promise complete data
 removal. Keep/delete acceptance must verify and record that actual behavior;
 manual fixture-volume cleanup is a separate administrator operation.
@@ -106,4 +106,23 @@ manual fixture-volume cleanup is a separate administrator operation.
 
 - [Navidrome externalized authentication](https://www.navidrome.org/docs/usage/integration/authentication/)
 - [Navidrome container installation](https://www.navidrome.org/docs/installation/docker/)
-- [SDK account and gateway implementation](https://github.com/synopackageland/syno-pkg-land-sdk/tree/v0.21.0/idgateway)
+- [SDK account and gateway implementation](https://github.com/synopackageland/syno-pkg-land-sdk/tree/v0.22.0/idgateway)
+
+## Released 0.22.0 candidate acceptance
+
+The production `0.64.2-0002` SPK uses published CLI/templates/SDK/App 0.22.0,
+UI 0.12.5 and executor/v0.20.0, without source overrides or Go replace.
+Check/build/inspect passed with no findings; the adapter proof verifier and
+source/expanded-SPK public scans passed.
+
+A fresh DSM 7.3.2 x86_64 native installation selected a disposable music
+Shared Folder. The package identity could read the test WAV and could not
+write the file or its folder. Native start and DSM main-menu login reached
+the unmodified upstream library. A five-second WAV played through the upstream
+Songs page: the HTML audio clock advanced from 0.265 seconds to 5 seconds,
+ended normally, and reported no media error.
+
+Native stop/start returned the package to running state. Delete-data uninstall
+displayed COMPOSE_DATA_RETAINED. After package and containers were absent, only
+the disposable acceptance volumes, music share and upload were removed
+separately; DSM package identity was retained.
