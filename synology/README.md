@@ -42,5 +42,5 @@ that password. Never enter the DSM password in the Subsonic client. `/rest`
 requires Navidrome credentials even when the browser has a DSM session. A
 published `/share/` link opens anonymously; remove the share to revoke it.
 
-Named data volumes survive both uninstall choices under SDK 0.21.0. The uninstall
+Named data volumes survive both uninstall choices under SDK 0.22.0. The uninstall
 message reports this explicitly; delete-data does not delete those volumes.
