@@ -1,0 +1,29 @@
+{
+  "tag": "0.64.2",
+  "upstream_commit": "101145742f4762164202cb4858c9126258bdc463",
+  "source_tree": "e7378ee742797c303660971971796c197d9ecce5",
+  "build": 2,
+  "repository": "deluan/navidrome",
+  "reference": "deluan/navidrome:0.64.2@sha256:38dc2727bfcfd5ede290f8ada114fc90368146f265ae4701ddddbcbe2a44ee52",
+  "index_digest": "sha256:38dc2727bfcfd5ede290f8ada114fc90368146f265ae4701ddddbcbe2a44ee52",
+  "index_media_type": "application/vnd.oci.image.index.v1+json",
+  "platforms": [
+    {
+      "os": "linux",
+      "architecture": "amd64",
+      "manifest_digest": "sha256:59ce76e6e06193fbfbb1736a93b8468227e1ea663fc7b25b1da13fbb97f5197b",
+      "config_digest": "sha256:3fa63c3ddc32d31c79970194d2d83143ac316b0bcef78695d1d9ab4c5a4f84b9",
+      "source_commit": "101145742f4762164202cb4858c9126258bdc463",
+      "version": "0.64.2"
+    },
+    {
+      "os": "linux",
+      "architecture": "arm64",
+      "manifest_digest": "sha256:bb5b2e422a8777e19daeb9995b7ca22f34097c8529f3192f37eefc80fe7653a5",
+      "config_digest": "sha256:82838e7fadf89382dbbb6405f1e8e82271fb0398e05eff0ffccb36fe1c38d347",
+      "source_commit": "101145742f4762164202cb4858c9126258bdc463",
+      "version": "0.64.2"
+    }
+  ],
+  "distribution": "official upstream registry; DSM Container Manager downloads the image"
+}
