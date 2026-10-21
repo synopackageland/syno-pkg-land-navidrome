@@ -1,0 +1,7 @@
+The Navidrome application and logo are provided by the Navidrome project under
+GPL-3.0. The official container contains additional third-party software; consult
+the upstream image and source notices. No upstream application code is modified.
+
+The files authored in this integration directory are Copyright (c) 2026
+synopackageland and licensed under MIT, except the copied template notices and
+upstream logo, which retain their respective licenses.
