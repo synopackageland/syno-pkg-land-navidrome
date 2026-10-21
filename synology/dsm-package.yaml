@@ -1,0 +1,45 @@
+schema: 2
+package: SynoPkgNavidrome
+version: 0.64.2
+build: 2
+displayname: Navidrome
+description: Music streaming with the upstream UI and DSM account sign-in.
+maintainer: synopackageland
+icon: assets/navidrome.png
+os_min_ver: "7.2.1-69057"
+arches: [x86_64]
+entry: app-privilege
+capabilities: {composeMounts: true}
+install:
+  sharedFolder: {mode: select, key: music, permission: ro}
+compose:
+  sdk: 0.21.0
+  files: [compose.yaml]
+  helpers: {x86_64: .build/helpers}
+  shares:
+    music:
+      select: install
+      mounts: [{service: navidrome, target: /music}]
+  services:
+    navidrome:
+      storage_init:
+        directories: [{base: /var/tmp, path: navidrome}]
+        runtime:
+          environment:
+            BRIDGE_CONTROL: {secret: bridge-control}
+  startup_timeout_seconds: 300
+  web: {service: navidrome, port: 4533, health: {path: /ping, status: 200}}
+  network: {egress: internet}
+identity_gateway:
+  sdk: 0.21.0
+  mode: header
+  access: dsm-users
+  listen: {https: 28543}
+  session_ttl: 900
+  headers: {user: Remote-User, uid: Remote-Uid, groups: Remote-Groups}
+  roles: {admin: admin, user: user}
+  passthrough: [/rest, /share]
+  account:
+    on_delete:
+      - exec: [account-delete, delete, /var/packages/SynoPkgNavidrome/target, "{uid}"]
+ui: {launch: new-page}
