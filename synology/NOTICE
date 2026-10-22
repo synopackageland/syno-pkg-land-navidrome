@@ -5,3 +5,10 @@ the upstream image and source notices. No upstream application code is modified.
 The files authored in this integration directory are Copyright (c) 2026
 synopackageland and licensed under MIT, except the copied template notices and
 upstream logo, which retain their respective licenses.
+
+## Package icon attribution
+
+Official Navidrome artwork from navidrome/navidrome at `v0.64.2`, `ui/public/android-chrome-512x512.png`.
+Source: https://raw.githubusercontent.com/navidrome/navidrome/v0.64.2/ui/public/android-chrome-512x512.png
+Original SHA-256: `0fbdccf6cb56ab9ba389471789a4aca4a296bcd5fbb50aa206d3bb69bba153de`.
+License: GPL-3.0. The original asset is preserved; only size conversion/rasterization is performed for DSM. Upstream names and trademarks remain with their respective owners; this community integration does not claim upstream endorsement.

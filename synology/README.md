@@ -44,3 +44,7 @@ published `/share/` link opens anonymously; remove the share to revoke it.
 
 Named data volumes survive both uninstall choices under SDK 0.22.0. The uninstall
 message reports this explicitly; delete-data does not delete those volumes.
+
+## Official package icon
+
+The DSM package uses the official project artwork, preserved unchanged and only resized/rasterized to the required icon sizes. See [assets/icon-source.json](assets/icon-source.json) for the source revision and original SHA-256, and [NOTICE](NOTICE) for attribution and the applicable image license. The package ID remains `SynoPkgNavidrome` for upgrade continuity.

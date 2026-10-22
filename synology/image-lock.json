@@ -2,7 +2,7 @@
   "tag": "0.64.2",
   "upstream_commit": "101145742f4762164202cb4858c9126258bdc463",
   "source_tree": "e7378ee742797c303660971971796c197d9ecce5",
-  "build": 2,
+  "build": 3,
   "repository": "deluan/navidrome",
   "reference": "deluan/navidrome:0.64.2@sha256:38dc2727bfcfd5ede290f8ada114fc90368146f265ae4701ddddbcbe2a44ee52",
   "index_digest": "sha256:38dc2727bfcfd5ede290f8ada114fc90368146f265ae4701ddddbcbe2a44ee52",

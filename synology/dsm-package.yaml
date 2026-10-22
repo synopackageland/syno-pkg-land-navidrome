@@ -1,7 +1,7 @@
 schema: 2
 package: SynoPkgNavidrome
 version: 0.64.2
-build: 2
+build: 3
 displayname: Navidrome
 description: Music streaming with the upstream UI and DSM account sign-in.
 maintainer: synopackageland
@@ -13,7 +13,7 @@ capabilities: {composeMounts: true}
 install:
   sharedFolder: {mode: select, key: music, permission: ro}
 compose:
-  sdk: 0.22.0
+  sdk: 0.24.0
   files: [compose.yaml]
   helpers: {x86_64: .build/helpers}
   shares:
@@ -31,7 +31,7 @@ compose:
   web: {service: navidrome, port: 4533, health: {path: /ping, status: 200}}
   network: {egress: internet}
 identity_gateway:
-  sdk: 0.22.0
+  sdk: 0.24.0
   mode: header
   access: dsm-users
   listen: {https: 28543}
