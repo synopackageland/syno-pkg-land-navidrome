@@ -3,7 +3,7 @@ package: SynoPkgNavidrome
 version: 0.64.2
 build: 3
 displayname: Navidrome
-description: Music streaming with the upstream UI and DSM account sign-in.
+description: Stream your music collection through a web player or compatible apps
 maintainer: synopackageland
 icon: assets/navidrome.png
 os_min_ver: "7.2.1-69057"
@@ -43,3 +43,7 @@ identity_gateway:
     on_delete:
       - exec: [account-delete, delete, /var/packages/SynoPkgNavidrome/target, "{uid}"]
 ui: {launch: new-page}
+i18n:
+  info:
+    zh-TW:
+      description: 透過網頁播放器或相容 App 串流播放你的音樂收藏
