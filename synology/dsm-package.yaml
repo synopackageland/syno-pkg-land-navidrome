@@ -1,7 +1,7 @@
 schema: 2
 package: SynoPkgNavidrome
 version: 0.64.2
-build: 2
+build: 3
 displayname: Navidrome
 description: Music streaming with the upstream UI and DSM account sign-in.
 maintainer: synopackageland
