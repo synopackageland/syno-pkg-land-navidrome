@@ -27,7 +27,6 @@ compose:
         runtime:
           environment:
             BRIDGE_CONTROL: {secret: bridge-control}
-  startup_timeout_seconds: 300
   web: {service: navidrome, port: 4533, health: {path: /ping, status: 200}}
   network: {egress: internet}
 identity_gateway:
