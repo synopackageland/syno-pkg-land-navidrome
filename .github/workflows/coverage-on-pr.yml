@@ -18,7 +18,7 @@ jobs:
       # Only the config, from the base branch: this job holds a write token, so
       # it must never check out the fork.
       - name: Check out the octocov config
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
         with:
           sparse-checkout: .octocov.yml
           sparse-checkout-cone-mode: false
