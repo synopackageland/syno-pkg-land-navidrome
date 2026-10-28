@@ -1,5 +1,13 @@
 # Navidrome for DSM
 
+
+## 0.64.2-0010: SDK entry-gate migration
+
+Built with SDK/App/templates 0.32.0, CLI 0.34.0 and executor v0.32.0.
+Only `/rest`, `/share` use upstream authentication; all other browser paths retain the DSM entry gate.
+Protected executor payloads changed: administrator approval is required again after upgrading.
+No NAS installation or device acceptance was performed for this rebuild.
+
 ## 0.64.2-0007
 
 Improve opening the App from the DSM menu and external access settings. Built with SDK/App 0.30.2 and CLI/templates 0.30.0. No NAS testing was performed for this toolchain rebuild.
