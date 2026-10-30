@@ -2,12 +2,11 @@
 
 ## 0.64.2-0011
 
-Candidate packaging update. NAS upgrade and native App loading are verified.
-The CLI 0.41.8 smoke passes signed-out entry; administrator and normal-user entry
-are blocked by its self-signed certificate handling. Acceptance awaits the CLI
-0.41.9 helper patch; the App's entry policy and smoke remain unchanged.
+NAS upgrade and the CLI 0.41.9 app-open smoke are verified: administrator,
+permitted normal user and signed-out entry all pass, including self-signed
+DSM and gateway certificates. The App's entry policy and smoke are unchanged.
 
-Repackaged with SDK/App 0.38.2, CLI 0.41.8, templates 0.35.5 and executor
+Repackaged with SDK/App 0.38.2, CLI 0.41.9, templates 0.35.5 and executor
 v0.38.2. The upstream image and UI are unchanged; this package has no custom SDK
 UI kit frontend (`toolchain.json` records `ui: null`). Installation defaults to the
 dedicated `Navidrome` music share with read-only package access, and offers the
@@ -92,8 +91,8 @@ causes N to skip). The command uses `e2e.smoke.config.ts` and the CLI tunnel
 helper, which forwards a free local loopback port to DSM port 5000 and sets
 `DSM_E2E_URL` to its HTTP URL. Run the tunnel on the Linux test host and close it
 after testing. Ensure the browser can also reach the selected gateway HTTPS
-port and the DSM HTTPS authorization callback. CLI 0.41.8 can reject self-signed
-certificates in A/N; use the patched CLI helper rather than changing the smoke.
+port and the DSM HTTPS authorization callback. The CLI helper accepts self-signed
+DSM and gateway certificates without App-specific certificate settings.
 Keep accounts, profiles and device evidence outside version control.
 
 ## Official package icon
