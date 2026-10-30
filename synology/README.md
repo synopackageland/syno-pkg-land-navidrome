@@ -1,5 +1,21 @@
 # Navidrome for DSM
 
+## 0.64.2-0011
+
+Candidate packaging update; NAS installation and A/N/X acceptance are pending
+the CLI 0.41.7 patch. Do not treat the current 0.41.6 build as accepted.
+
+Repackaged with SDK/App 0.38.2, CLI 0.41.6, templates 0.35.5 and executor
+v0.38.2. The upstream image and UI are unchanged; this package has no custom SDK
+UI kit frontend (`toolchain.json` records `ui: null`). Installation defaults to the
+dedicated `Navidrome` music share with read-only package access, and offers the
+gateway HTTPS port (default 28543). Upgrades retain saved ports and music-folder
+selections. Shared music is retained on uninstall. Approval retention is unknown
+without a comparable installed baseline; review the SDK approval screen.
+
+The minimal app-open smoke checks administrator, permitted normal-user and
+signed-out entry using Navidrome's native Songs navigation. The existing music,
+playback, sharing and denial acceptance suite remains available separately.
 
 ## 0.64.2-0010: SDK entry-gate migration
 
@@ -14,13 +30,13 @@ Improve opening the App from the DSM menu and external access settings. Built wi
 
 改善從 DSM 選單開啟 App 與外網存取設定；使用 SDK/App 0.30.2 和 CLI/templates 0.30.0 重建
 
-Official Navidrome image and UI with DSM account sign-in, read-only music-folder
-selection, native Subsonic authentication and anonymous public share links.
+Official Navidrome image and UI with DSM account sign-in, a read-only music
+share, native Subsonic authentication and anonymous public share links.
 See [the integration design](docs/design.md) for identity, isolation, account
 retention and uninstall boundaries.
 
-Requirements: DSM 7.2.1 or later, x86_64, Container Manager, a readable music
-Shared Folder and a browser-trusted DSM system default HTTPS certificate.
+Requirements: DSM 7.2.1 or later, x86_64, Container Manager and a browser-trusted
+DSM system default HTTPS certificate.
 Device acceptance is tracked separately; building an SPK does not certify a NAS.
 
 ## Build
@@ -44,8 +60,10 @@ uncommitted tracked changes and changes outside `synology/`.
 
 ## Use
 
-Install the SPK, select the music Shared Folder, complete the SDK read-only
-permission guide, and grant the App privilege to the intended DSM accounts.
+Install the SPK, accept the dedicated `Navidrome` share and default HTTPS port,
+and grant the App privilege to the intended DSM accounts. DSM creates the share
+and grants the package read-only access. An optional existing folder must pass
+the SDK's access validation before installation can continue.
 Open Navidrome from the DSM main menu. Each DSM user gets an upstream account;
 DSM administrators get Navidrome administration. The first ordinary login does
 not gain administration. The upstream UI scans and plays the selected library.
@@ -56,8 +74,22 @@ that password. Never enter the DSM password in the Subsonic client. `/rest`
 requires Navidrome credentials even when the browser has a DSM session. A
 published `/share/` link opens anonymously; remove the share to revoke it.
 
-Named data volumes survive both uninstall choices under SDK 0.22.0. The uninstall
+Named data volumes survive both uninstall choices. The uninstall
 message reports this explicitly; delete-data does not delete those volumes.
+
+## App-open smoke
+
+Install Chromium once with `npx --no @e2e-dev/web install chromium`. Set
+`DSM_E2E_SSH` to the NAS SSH destination and `DSM_E2E_ACCOUNT_ADMIN` and
+`DSM_E2E_ACCOUNT_NORMAL` to private mode-600 account files accepted by the CLI.
+The normal account must already have this App's Application Privilege. Run
+`npm run e2e:smoke`; all A/N/X scenarios must pass (an omitted normal account
+causes N to skip). The command uses `e2e.smoke.config.ts` and the CLI tunnel
+helper, which forwards a free local loopback port to DSM port 5000 and sets
+`DSM_E2E_URL` to its HTTP URL. Run the tunnel on the Linux test host when the DSM
+certificate is not trusted; close it after testing. Ensure the browser can also
+reach the selected gateway HTTPS port.
+Keep accounts, profiles and device evidence outside version control.
 
 ## Official package icon
 
