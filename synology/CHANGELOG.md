@@ -2,7 +2,7 @@
 
 ## 0.64.2-0011
 
-- Repackage the unchanged upstream 0.64.2 image with SDK/App 0.38.2 and CLI 0.41.6.
+- Repackage the unchanged upstream 0.64.2 image with SDK/App 0.38.2 and CLI 0.41.8.
 - Default to a dedicated read-only Navidrome share and installer-selected HTTPS port.
 - Add the CLI's A/N/X app-open smoke with a native Navidrome content marker.
 - Preserve the existing playback, sharing, identity and denial acceptance suite.

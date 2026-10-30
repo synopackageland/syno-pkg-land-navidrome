@@ -2,16 +2,20 @@
 
 ## 0.64.2-0011
 
-Candidate packaging update; NAS installation and A/N/X acceptance are pending
-the CLI 0.41.7 patch. Do not treat the current 0.41.6 build as accepted.
+Candidate packaging update. NAS upgrade and native App loading are verified.
+The CLI 0.41.8 smoke passes signed-out entry; administrator and normal-user entry
+are blocked by its self-signed certificate handling. Acceptance awaits the CLI
+0.41.9 helper patch; the App's entry policy and smoke remain unchanged.
 
-Repackaged with SDK/App 0.38.2, CLI 0.41.6, templates 0.35.5 and executor
+Repackaged with SDK/App 0.38.2, CLI 0.41.8, templates 0.35.5 and executor
 v0.38.2. The upstream image and UI are unchanged; this package has no custom SDK
 UI kit frontend (`toolchain.json` records `ui: null`). Installation defaults to the
 dedicated `Navidrome` music share with read-only package access, and offers the
 gateway HTTPS port (default 28543). Upgrades retain saved ports and music-folder
 selections. Shared music is retained on uninstall. Approval retention is unknown
 without a comparable installed baseline; review the SDK approval screen.
+If a retained legacy music share lacks package-account read access, choose the
+dedicated `Navidrome` share in the upgrade wizard.
 
 The minimal app-open smoke checks administrator, permitted normal-user and
 signed-out entry using Navidrome's native Songs navigation. The existing music,
@@ -86,9 +90,10 @@ The normal account must already have this App's Application Privilege. Run
 `npm run e2e:smoke`; all A/N/X scenarios must pass (an omitted normal account
 causes N to skip). The command uses `e2e.smoke.config.ts` and the CLI tunnel
 helper, which forwards a free local loopback port to DSM port 5000 and sets
-`DSM_E2E_URL` to its HTTP URL. Run the tunnel on the Linux test host when the DSM
-certificate is not trusted; close it after testing. Ensure the browser can also
-reach the selected gateway HTTPS port.
+`DSM_E2E_URL` to its HTTP URL. Run the tunnel on the Linux test host and close it
+after testing. Ensure the browser can also reach the selected gateway HTTPS
+port and the DSM HTTPS authorization callback. CLI 0.41.8 can reject self-signed
+certificates in A/N; use the patched CLI helper rather than changing the smoke.
 Keep accounts, profiles and device evidence outside version control.
 
 ## Official package icon
