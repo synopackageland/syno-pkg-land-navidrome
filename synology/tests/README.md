@@ -1,5 +1,9 @@
 # Focused verification
 
+The minimal app-open gate is `npm run e2e:smoke`; see the package README for
+private NAS/account inputs. It uses `e2e.smoke.config.ts`, independently of the
+full fixture-dependent acceptance suite below, and needs no music fixture.
+
 Run `scripts/build-linux.sh` from the repository root inside the configured Linux
 builder. It runs the adapter race tests, produces the SPK with published tools,
 inspects it, and checks the packaged privilege/identity/adapter boundary.
