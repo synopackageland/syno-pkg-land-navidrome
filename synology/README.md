@@ -91,8 +91,8 @@ uncommitted tracked changes and changes outside `synology/`.
 
 Install the SPK and accept the dedicated `Navidrome` share,
 and grant the App privilege to the intended DSM accounts. DSM creates the share
-and grants the package read-only access. An optional existing folder must pass
-the SDK's access validation before installation can continue.
+and grants the package read-only access. The wizard validates an optional existing folder for supported local storage;
+DSM grants read-only package-account access without a prior grant.
 Open Navidrome from the DSM main menu. Each DSM user gets an upstream account;
 DSM administrators get Navidrome administration. The first ordinary login does
 not gain administration. The upstream UI scans and plays the selected library.
