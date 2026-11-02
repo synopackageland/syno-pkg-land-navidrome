@@ -1,9 +1,9 @@
 # Navidrome for DSM
 
-## 0.64.2-0015
+## 0.64.2-0016
 
 Use DSM's fixed HTTPS entry at `/synopkgland/SynoPkgNavidrome/` with
-CLI 0.43.0, Go SDK 0.43.1, executor 0.39.0 and templates 0.38.0. The dedicated public gateway
+CLI 0.47.1, Go SDK 0.46.1, executor 0.39.0 and templates 0.38.0. The dedicated public gateway
 port and its installer option are removed. The official image and application
 code remain unchanged. Header sign-in, Application Privilege, read-only music
 access and native authentication for `/rest` and `/share` are retained.
@@ -125,3 +125,5 @@ Keep accounts, profiles and device evidence outside version control.
 ## Official package icon
 
 The DSM package uses the official project artwork, preserved unchanged and only resized/rasterized to the required icon sizes. See [assets/icon-source.json](assets/icon-source.json) for the source revision and original SHA-256, and [NOTICE](NOTICE) for attribution and the applicable image license. The package ID remains `SynoPkgNavidrome` for upgrade continuity.
+
+Current release checks and acceptance boundaries: [shared-folder release](shared-folder-release.json).
