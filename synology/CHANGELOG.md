@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.64.2-0012
+
+- Rebuild the unchanged upstream 0.64.2 image with CLI 0.42.2 and SDK/App/executor 0.42.0.
+- Align templates with CLI 0.42.2 at 0.37.0 and retain public npm registry pins.
+- Keep the existing application privilege, music share and authentication policies.
+
 ## 0.64.2-0011
 
 - Repackage the unchanged upstream 0.64.2 image with SDK/App 0.38.2 and CLI 0.41.9.
