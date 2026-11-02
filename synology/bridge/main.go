@@ -65,7 +65,7 @@ func run() error {
 		}
 	}()
 	base := "http://127.0.0.1:4534"
-	a := newAccounts(base, os.Getenv("ND_DATAFOLDER"))
+	a := newAccounts(base+basePath, os.Getenv("ND_DATAFOLDER"))
 	ready := false
 	for i := 0; i < 120; i++ {
 		c := http.Client{Timeout: time.Second}
@@ -155,7 +155,7 @@ func gatewayLogout(r *http.Response) error {
 	if err != nil || len(body) > 4<<20 {
 		return errors.New("upstream HTML exceeds limit")
 	}
-	body = bytes.ReplaceAll(body, []byte("https://navidrome.invalid/_sso/logout"), []byte("/_dsm/logout"))
+	body = bytes.ReplaceAll(body, []byte("https://navidrome.invalid/_sso/logout"), []byte(basePath+"/_dsm/logout"))
 	r.Body = io.NopCloser(bytes.NewReader(body))
 	r.ContentLength = int64(len(body))
 	r.Header.Set("Content-Length", strconv.Itoa(len(body)))

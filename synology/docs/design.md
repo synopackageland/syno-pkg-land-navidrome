@@ -1,5 +1,12 @@
 # DSM integration design
 
+The current entry is `/synopkgland/SynoPkgNavidrome/` on the DSM origin.
+The upstream receives this full namespace through native `ND_BASEURL`; browser
+API policy and bootstrap use the same prefix. Native `/rest` and `/share` paths
+below are relative to that namespace. The private health and deletion-control
+endpoints retain their original root paths. No public gateway port is allocated.
+
+
 The source fork remains unchanged outside `synology/`. Runtime uses the official
 `deluan/navidrome:0.64.2` image, pinned to its verified registry index. The
 integration preserves Navidrome's UI; it does not introduce another login page.
@@ -61,7 +68,7 @@ tokens/passwords; its own share handler validates anonymous share URLs.
 
 In Navidrome's personal settings, set a separate Navidrome password for native
 Subsonic clients. Use the Navidrome username shown in that UI and the App's HTTPS
-origin. The DSM password is never copied into Navidrome. DSM logout does not
+origin plus `/synopkgland/SynoPkgNavidrome`. The DSM password is never copied into Navidrome. DSM logout does not
 revoke an independent native-client password or a public share link. Remove the
 share or change the Navidrome password to revoke that native access.
 
