@@ -1,5 +1,19 @@
 # Navidrome for DSM
 
+## 0.64.2-0015
+
+Use DSM's fixed HTTPS entry at `/synopkgland/SynoPkgNavidrome/` with
+CLI 0.43.0, Go SDK 0.43.1, executor 0.39.0 and templates 0.38.0. The dedicated public gateway
+port and its installer option are removed. The official image and application
+code remain unchanged. Header sign-in, Application Privilege, read-only music
+access and native authentication for `/rest` and `/share` are retained.
+
+The wrapper configures native `ND_BASEURL` and uses that namespace for account
+bootstrap, browser account policy and logout. The private `/ping` health check
+and signed account-deletion control remain on their existing private endpoints.
+Existing music and data volumes are retained during an in-place upgrade.
+
+
 ## 0.64.2-0012
 
 Rebuilt with CLI 0.42.2, SDK/App/executor 0.42.0 and templates 0.37.0.
@@ -75,7 +89,7 @@ uncommitted tracked changes and changes outside `synology/`.
 
 ## Use
 
-Install the SPK, accept the dedicated `Navidrome` share and default HTTPS port,
+Install the SPK and accept the dedicated `Navidrome` share,
 and grant the App privilege to the intended DSM accounts. DSM creates the share
 and grants the package read-only access. An optional existing folder must pass
 the SDK's access validation before installation can continue.
@@ -85,9 +99,10 @@ not gain administration. The upstream UI scans and plays the selected library.
 
 Set a separate **Navidrome password** in personal settings before configuring a
 Subsonic client. Use this App's HTTPS URL, the displayed Navidrome username and
-that password. Never enter the DSM password in the Subsonic client. `/rest`
+that password. The Subsonic server URL includes `/synopkgland/SynoPkgNavidrome`.
+Never enter the DSM password in the Subsonic client. `/rest`
 requires Navidrome credentials even when the browser has a DSM session. A
-published `/share/` link opens anonymously; remove the share to revoke it.
+published `/synopkgland/SynoPkgNavidrome/share/` link opens anonymously; remove the share to revoke it.
 
 Named data volumes survive both uninstall choices. The uninstall
 message reports this explicitly; delete-data does not delete those volumes.
@@ -102,8 +117,8 @@ The normal account must already have this App's Application Privilege. Run
 causes N to skip). The command uses `e2e.smoke.config.ts` and the CLI tunnel
 helper, which forwards a free local loopback port to DSM port 5000 and sets
 `DSM_E2E_URL` to its HTTP URL. Run the tunnel on the Linux test host and close it
-after testing. Ensure the browser can also reach the selected gateway HTTPS
-port and the DSM HTTPS authorization callback. The CLI helper accepts self-signed
+after testing. Ensure the browser can reach DSM HTTPS and its authorization callback; the
+App uses the fixed path on the same DSM origin. The CLI helper accepts self-signed
 DSM and gateway certificates without App-specific certificate settings.
 Keep accounts, profiles and device evidence outside version control.
 

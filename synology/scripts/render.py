@@ -19,7 +19,7 @@ command = 'umask 077\nmkdir -p /tmp/navidrome-bridge\n: > /tmp/navidrome-bridge/
 lock = json.loads((ROOT / 'image-lock.json').read_text())
 service = {
  'image': lock['reference'], 'entrypoint': ['/bin/sh', '-eu', '-c'], 'command': [command, 'bootstrap', *chunks],
- 'environment': {'ND_DATAFOLDER': '/var/tmp/navidrome', 'ND_MUSICFOLDER': '/music',
+ 'environment': {'ND_BASEURL': '/synopkgland/SynoPkgNavidrome', 'ND_DATAFOLDER': '/var/tmp/navidrome', 'ND_MUSICFOLDER': '/music',
    'ND_CONFIGFILE': '/tmp/navidrome-bridge/empty.toml', 'ND_EXTAUTH_USERHEADER': 'Remote-User',
    'ND_EXTAUTH_TRUSTEDSOURCES': '127.0.0.1/32', 'ND_EXTAUTH_LOGOUTURL': 'https://navidrome.invalid/_sso/logout',
    'ND_ENABLESHARING': 'true', 'ND_ENABLEUSEREDITING': 'true', 'ND_ENABLEINSIGHTS': 'false',

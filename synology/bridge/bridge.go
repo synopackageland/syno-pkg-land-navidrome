@@ -14,6 +14,8 @@ import (
 	"time"
 )
 
+const basePath = "/synopkgland/SynoPkgNavidrome"
+
 const bootstrapName = "__dsm_bridge_internal__"
 
 var identityHeaders = []string{"Remote-User", "Remote-Uid", "Remote-Groups", "Remote-Name", "Remote-Email"}
@@ -57,15 +59,22 @@ func (b *bridge) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		b.control(w, r)
 		return
 	}
-	if bypass(r.URL.Path) {
+	// Control and health endpoints above/below use the private upstream root.
+	if r.URL.Path == "/ping" && r.Method == "GET" && r.Header.Get("Remote-User") == "" {
+		w.WriteHeader(200)
+		return
+	}
+	if !strings.HasPrefix(r.URL.Path, basePath+"/") {
+		http.NotFound(w, r)
+		return
+	}
+	// Normalize only for policy checks; forward the original URI to Navidrome.
+	path := strings.TrimPrefix(r.URL.Path, basePath)
+	if bypass(path) {
 		for _, h := range identityHeaders {
 			r.Header.Del(h)
 		}
 		b.proxy.ServeHTTP(w, r)
-		return
-	}
-	if r.URL.Path == "/ping" && r.Method == "GET" && r.Header.Get("Remote-User") == "" {
-		w.WriteHeader(200)
 		return
 	}
 	name := r.Header.Get("Remote-User")
@@ -80,12 +89,12 @@ func (b *bridge) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "account synchronization unavailable", 503)
 		return
 	}
-	if r.URL.Path == "/_dsm/logout" && r.Method == http.MethodGet {
+	if path == "/_dsm/logout" && r.Method == http.MethodGet {
 		nonce := randomID()
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
 		w.Header().Set("Cache-Control", "no-store")
 		w.Header().Set("Content-Security-Policy", "default-src 'none'; script-src 'nonce-"+nonce+"'; connect-src 'self'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'")
-		fmt.Fprintf(w, `<!doctype html><meta charset="utf-8"><title>Sign out</title><form method="post" action="/_sso/logout"><button type="submit">Sign out</button></form><script nonce="%s">const form=document.forms[0];async function signOut(){try{const r=await fetch("/_sso/logout",{method:"POST",credentials:"same-origin",redirect:"manual"});if(r.type!=="opaqueredirect"&&!r.ok)throw new Error();location.replace("/")}catch{document.getElementById("status").textContent="Sign out failed. Try again."}}form.addEventListener("submit",e=>{e.preventDefault();signOut()});signOut()</script><p id="status" role="status"></p>`, nonce)
+		fmt.Fprintf(w, `<!doctype html><meta charset="utf-8"><title>Sign out</title><form method="post" action="/synopkgland/SynoPkgNavidrome/_sso/logout"><button type="submit">Sign out</button></form><script nonce="%s">const form=document.forms[0];async function signOut(){try{const r=await fetch("/synopkgland/SynoPkgNavidrome/_sso/logout",{method:"POST",credentials:"same-origin",redirect:"manual"});if(r.type!=="opaqueredirect"&&!r.ok)throw new Error();location.replace("/synopkgland/SynoPkgNavidrome/")}catch{document.getElementById("status").textContent="Sign out failed, try again"}}form.addEventListener("submit",e=>{e.preventDefault();signOut()});signOut()</script><p id="status" role="status"></p>`, nonce)
 		return
 	}
 	// Native browser JWTs must never choose a different user than the DSM gateway.
@@ -95,8 +104,8 @@ func (b *bridge) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	q.Del("jwt")
 	r.URL.RawQuery = q.Encode()
 	// Account roles belong to DSM. Keep password/preferences editing for the owner.
-	if r.URL.Path == "/auth/createAdmin" || r.URL.Path == "/auth/login" ||
-		strings.HasPrefix(r.URL.Path, "/api/user") && r.Method != "GET" && (r.Method != "PUT" || strings.TrimSuffix(r.URL.Path, "/") != "/api/user/"+url.PathEscape(id)) {
+	if path == "/auth/createAdmin" || path == "/auth/login" ||
+		strings.HasPrefix(path, "/api/user") && r.Method != "GET" && (r.Method != "PUT" || strings.TrimSuffix(path, "/") != "/api/user/"+url.PathEscape(id)) {
 		http.Error(w, "accounts are managed by DSM", 403)
 		return
 	}

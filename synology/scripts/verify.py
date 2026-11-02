@@ -19,6 +19,12 @@ with tarfile.open(sys.argv[1]) as outer:
   gateway=json.load(payload.extractfile('sso/gateway.json'))
   assert lock['ingress']['address']==proof['ingress_address']
   assert lock['ingress']['port']==4533
+  assert gateway['ingress_path']=='/synopkgland/SynoPkgNavidrome/'
+  assert not gateway['listen']
+  resource=json.load(outer.extractfile('conf/resource'))
+  assert resource['web-config']['nginx-static-config']['enable']
+  assert 'port-config' not in resource
+  assert 'install/ports.defaults.json' not in payload.getnames()
   assert gateway['mode']=='header' and gateway['access']=='dsm-users'
   assert set(gateway['passthrough'])=={'/rest','/share'}
   assert gateway['headers']['user']=='Remote-User'
