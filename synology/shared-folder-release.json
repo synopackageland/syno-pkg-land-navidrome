@@ -1,0 +1,32 @@
+{
+  "version": "0.64.2-0016",
+  "toolchain": {
+    "cli": "0.47.1",
+    "templates": "0.38.0",
+    "sdk": "0.46.1",
+    "app": "0.46.1",
+    "ui": null,
+    "executorTag": "executor/v0.39.0",
+    "goToolchain": "go1.26.10"
+  },
+  "checks": {
+    "unit_tests": true,
+    "build": true,
+    "inspect": true
+  },
+  "artifact": {
+    "file": "SynoPkgNavidrome-0.64.2-0016-x86_64.spk",
+    "sha256": "41d47f9eafeddff3d2751a8be260d32ec9c79db35ea164babf80f7791fa17490",
+    "md5": "0f8996db63ad6eb95c8b8c161bc6799f",
+    "size": 49047040,
+    "inspect_findings": [],
+    "dsm_errors": [],
+    "public_scan": {
+      "source_files": 52,
+      "spk_files": 114,
+      "findings": []
+    }
+  },
+  "validation_scope": "Dependency bump; upstream sources/images and entry policy unchanged. Scoped source/SPK scan only.",
+  "device_acceptance": "Not run for this version; this release uses local unit/build/inspect gates"
+}
