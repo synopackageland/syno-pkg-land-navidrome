@@ -1,5 +1,17 @@
 # Navidrome for DSM
 
+## 0.64.2-0012
+
+Rebuilt with CLI 0.42.2, SDK/App/executor 0.42.0 and templates 0.37.0.
+The upstream 0.64.2 image, application code and entry policy are unchanged.
+There is no custom UI kit dependency to update. The npm lockfile uses only
+registry.npmjs.org. Check, x86_64 build, inspect and the packaged adapter
+boundary verification pass. This rebuild does not publish a release.
+An in-place upgrade retained saved settings, the gateway port and music/data
+mounts. Administrator opening from the DSM menu reaches the native Navidrome
+Songs navigation through the existing identity gateway at `/app/`. This Compose
+package does not declare `daemon.ingress`; its entry is not a daemon path.
+
 ## 0.64.2-0011
 
 NAS upgrade and the CLI 0.41.9 app-open smoke are verified: administrator,

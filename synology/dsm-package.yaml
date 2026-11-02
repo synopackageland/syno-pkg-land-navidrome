@@ -1,7 +1,7 @@
 schema: 2
 package: SynoPkgNavidrome
 version: 0.64.2
-build: 11
+build: 12
 displayname: Navidrome
 description: Stream your music collection through a web player or compatible apps
 maintainer: Navidrome
@@ -18,7 +18,7 @@ install:
   ports: true
   sharedFolder: {mode: dedicated, key: music, name: Navidrome, permission: ro}
 compose:
-  sdk: 0.38.2
+  sdk: 0.42.0
   files: [compose.yaml]
   helpers: {x86_64: .build/helpers}
   shares:
@@ -36,7 +36,7 @@ compose:
   network: {egress: internet}
 identity_gateway:
   upstream_auth_paths: [/rest, /share]
-  sdk: 0.38.2
+  sdk: 0.42.0
   mode: header
   access: dsm-users
   listen: {https: 28543}
