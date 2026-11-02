@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.64.2-0016
+
+- Use CLI 0.47.1 and SDK/App 0.46.1 for existing shared-folder grants through DSM data-share and Package Center upgrade dispatch
+- Retain the upstream application, data layout and entry policy
+- Shared folders, files and package-account ACLs are retained on uninstall by DSM
+
 ## 0.64.2-0015
 
 - Serve the App at DSM's fixed `/synopkgland/SynoPkgNavidrome/` path.
