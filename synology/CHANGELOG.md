@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.64.2-0015
+
+- Serve the App at DSM's fixed `/synopkgland/SynoPkgNavidrome/` path.
+- Use CLI 0.43.0, SDK 0.43.1 and templates 0.38.0.
+- Remove the public gateway port and configure Navidrome's native base URL.
+- Scope wrapper account policy, bootstrap, native paths and logout to that URL.
+- Retain header authentication, Application Privilege, the image and data volumes.
+
+
 ## 0.64.2-0012
 
 - Rebuild the unchanged upstream 0.64.2 image with CLI 0.42.2 and SDK/App/executor 0.42.0.
