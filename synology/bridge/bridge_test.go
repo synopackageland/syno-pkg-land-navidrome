@@ -31,7 +31,7 @@ func TestFirstRegularUserAndRoleChanges(t *testing.T) {
 		w.WriteHeader(204)
 	})
 	for _, admin := range []bool{false, true, false} {
-		r := httptest.NewRequest("GET", "http://music.example/app/?jwt=forged", nil)
+		r := httptest.NewRequest("GET", "http://music.example/synopkgland/SynoPkgNavidrome/app/?jwt=forged", nil)
 		r.RemoteAddr = "192.0.2.1:4000"
 		r.Header.Set("Remote-User", "listener")
 		r.Header.Set("Remote-Uid", "1024")
@@ -70,7 +70,7 @@ func TestBypassNeverCarriesIdentity(t *testing.T) {
 		w.WriteHeader(204)
 	})
 	for _, path := range []string{"/rest/ping.view?t=native-token", "/share/public?t=native-token"} {
-		r := httptest.NewRequest("GET", "http://music.example"+path, nil)
+		r := httptest.NewRequest("GET", "http://music.example"+basePath+path, nil)
 		r.RemoteAddr = "192.0.2.1:1"
 		for _, h := range []string{"Remote-User", "Remote-Uid", "Remote-Groups", "Remote-Name", "Remote-Email"} {
 			r.Header.Set(h, "forged")
@@ -86,7 +86,7 @@ func TestBypassNeverCarriesIdentity(t *testing.T) {
 func TestForgedPeerAndMissingIdentityFailClosed(t *testing.T) {
 	b := &bridge{peer: "192.0.2.1", proxy: http.HandlerFunc(func(http.ResponseWriter, *http.Request) { t.Fatal("reached upstream") })}
 	for _, tc := range []struct{ peer, path string }{{"192.0.2.2:1", "/app/"}, {"192.0.2.2:1", "/rest/ping"}, {"192.0.2.1:1", "/app/"}, {"192.0.2.1:1", "/rest-evil"}, {"192.0.2.1:1", "/rest/../api/user"}, {"192.0.2.1:1", "/rest%2fping"}} {
-		r := httptest.NewRequest("GET", "http://music.example"+tc.path, nil)
+		r := httptest.NewRequest("GET", "http://music.example"+basePath+tc.path, nil)
 		r.RemoteAddr = tc.peer
 		w := httptest.NewRecorder()
 		b.ServeHTTP(w, r)
@@ -173,28 +173,112 @@ func TestDeleteControlRequiresPrivateSignature(t *testing.T) {
 
 func TestLogoutUsesGatewayPost(t *testing.T) {
 	b := &bridge{peer: "192.0.2.1", syncUser: func(context.Context, int, string, bool) (string, error) { return "u1", nil }}
-	r := httptest.NewRequest("GET", "https://music.example/_dsm/logout", nil)
+	r := httptest.NewRequest("GET", "https://music.example/synopkgland/SynoPkgNavidrome/_dsm/logout", nil)
 	r.RemoteAddr = "192.0.2.1:1"
 	r.Header.Set("Remote-User", "listener")
 	r.Header.Set("Remote-Uid", "1024")
 	r.Header.Set("Remote-Groups", "user")
 	w := httptest.NewRecorder()
 	b.ServeHTTP(w, r)
-	if w.Code != 200 || !strings.Contains(w.Body.String(), `fetch("/_sso/logout"`) || !strings.Contains(w.Body.String(), `redirect:"manual"`) || !strings.Contains(w.Header().Get("Content-Security-Policy"), "connect-src 'self'") {
+	if w.Code != 200 || !strings.Contains(w.Body.String(), `fetch("/synopkgland/SynoPkgNavidrome/_sso/logout"`) || !strings.Contains(w.Body.String(), `redirect:"manual"`) || !strings.Contains(w.Header().Get("Content-Security-Policy"), "connect-src 'self'") {
 		t.Fatal("logout does not use SDK's same-origin POST")
 	}
 }
 
 func TestShareLinkRetainsVerifiedHTTPSOrigin(t *testing.T) {
 	upstream := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Header.Get("X-Forwarded-Proto") != "https" || r.Header.Get("X-Forwarded-Host") != "music.example:28543" || r.Header.Get("X-Forwarded-Port") != "28543" {
+		if r.URL.Path != basePath+"/rest/createShare" {
+			t.Errorf("native URI prefix lost: %s", r.URL.Path)
+		}
+		if r.Header.Get("X-Forwarded-Proto") != "https" || r.Header.Get("X-Forwarded-Host") != "music.example:5001" || r.Header.Get("X-Forwarded-Port") != "5001" {
 			t.Errorf("public origin lost: proto=%q host=%q", r.Header.Get("X-Forwarded-Proto"), r.Header.Get("X-Forwarded-Host"))
 		}
 	}))
 	defer upstream.Close()
 	target, _ := url.Parse(upstream.URL)
-	req := httptest.NewRequest("GET", "http://music.example:28543/rest/createShare", nil)
+	req := httptest.NewRequest("GET", "http://music.example:5001/synopkgland/SynoPkgNavidrome/rest/createShare", nil)
 	req.Header.Set("X-Forwarded-Proto", "https")
-	req.Header.Set("X-Forwarded-Port", "28543")
+	req.Header.Set("X-Forwarded-Port", "5001")
 	upstreamProxy(target).ServeHTTP(httptest.NewRecorder(), req)
+}
+
+func TestPrefixedAccountPolicy(t *testing.T) {
+	b := &bridge{peer: "192.0.2.1", syncUser: func(context.Context, int, string, bool) (string, error) { return "u1", nil }, proxy: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { w.WriteHeader(204) })}
+	for _, tc := range []struct {
+		method, path string
+		want         int
+	}{
+		{"POST", "/auth/createAdmin", 403}, {"POST", "/auth/login", 403},
+		{"POST", "/api/user", 403}, {"DELETE", "/api/user/u2", 403},
+		{"PUT", "/api/user/u2", 403}, {"PUT", "/api/user/u1", 204}, {"GET", "/api/user", 204},
+	} {
+		r := httptest.NewRequest(tc.method, "https://music.example"+basePath+tc.path, nil)
+		r.RemoteAddr = "192.0.2.1:1"
+		r.Header.Set("Remote-User", "listener")
+		r.Header.Set("Remote-Uid", "1024")
+		r.Header.Set("Remote-Groups", "user")
+		w := httptest.NewRecorder()
+		b.ServeHTTP(w, r)
+		if w.Code != tc.want {
+			t.Errorf("%s %s: %d", tc.method, tc.path, w.Code)
+		}
+	}
+}
+
+func TestPrefixBoundaryAndHealth(t *testing.T) {
+	b := &bridge{peer: "192.0.2.1", proxy: http.HandlerFunc(func(http.ResponseWriter, *http.Request) { t.Fatal("unexpected upstream access") })}
+	for _, path := range []string{"/rest/ping.view", "/share/public", basePath + "-other/rest/ping.view", basePath + "/rest/../api/user", basePath + "/rest%2fping"} {
+		r := httptest.NewRequest("GET", "https://music.example"+path, nil)
+		r.RemoteAddr = "192.0.2.1:1"
+		w := httptest.NewRecorder()
+		b.ServeHTTP(w, r)
+		if w.Code < 400 {
+			t.Errorf("accepted %s", path)
+		}
+	}
+	r := httptest.NewRequest("GET", "https://music.example/ping", nil)
+	r.RemoteAddr = "192.0.2.1:1"
+	w := httptest.NewRecorder()
+	b.ServeHTTP(w, r)
+	if w.Code != 200 {
+		t.Fatal(w.Code)
+	}
+}
+
+func TestBootstrapUsesNativeBasePath(t *testing.T) {
+	seen := []string{}
+	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		seen = append(seen, r.URL.Path)
+		if r.URL.Path == basePath+"/app/" {
+			w.WriteHeader(200)
+			return
+		}
+		if r.URL.Path == basePath+"/api/user" {
+			json.NewEncoder(w).Encode([]user{{"id": "bootstrap", "userName": bootstrapName, "isAdmin": true}})
+			return
+		}
+		t.Errorf("unexpected bootstrap path %s", r.URL.Path)
+		w.WriteHeader(404)
+	}))
+	defer s.Close()
+	if err := newAccounts(s.URL+basePath, t.TempDir()).bootstrap(context.Background()); err != nil {
+		t.Fatal(err)
+	}
+	if len(seen) != 2 {
+		t.Fatal(seen)
+	}
+}
+
+func TestLogoutConfigUsesPackageNamespace(t *testing.T) {
+	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		w.Write([]byte(`<script>window.__APP_CONFIG__={"extAuthLogoutURL":"https://navidrome.invalid/_sso/logout"}</script>`))
+	}))
+	defer s.Close()
+	up, _ := url.Parse(s.URL)
+	w := httptest.NewRecorder()
+	upstreamProxy(up).ServeHTTP(w, httptest.NewRequest("GET", "https://music.example"+basePath+"/app/", nil))
+	if w.Code != 200 || !strings.Contains(w.Body.String(), basePath+"/_dsm/logout") || strings.Contains(w.Body.String(), "navidrome.invalid") {
+		t.Fatal("logout escaped package namespace")
+	}
 }

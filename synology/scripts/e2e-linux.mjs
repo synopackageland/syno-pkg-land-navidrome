@@ -23,8 +23,8 @@ try{
  if(!port)throw new Error('Disposable Chromium did not start');
  const env={...process.env,DSM_E2E_URL:target.url,NAVIDROME_E2E_URL:target.app,
   DSM_E2E_CDP_ENDPOINT:`http://127.0.0.1:${port}`,
-  DSM_E2E_ACCOUNT_ADMIN:join(privateRoot,'nas-accounts.json'),DSM_E2E_ACCOUNT_READER:join(privateRoot,'nas-accounts.json'),
-  DSM_E2E_PROFILE_DIR:join(privateRoot,'login-profiles'),E2E_TELEMETRY_DISABLED:'1'};
+  DSM_E2E_ACCOUNT_ADMIN:process.env.DSM_E2E_ACCOUNT_ADMIN||join(privateRoot,'nas-accounts.json'),DSM_E2E_ACCOUNT_READER:process.env.DSM_E2E_ACCOUNT_READER||join(privateRoot,'nas-accounts.json'),
+  DSM_E2E_PROFILE_DIR:process.env.DSM_E2E_PROFILE_DIR||join(privateRoot,'login-profiles'),E2E_TELEMETRY_DISABLED:'1'};
  const child=spawn(process.execPath,[join(root,'node_modules/e2e/dist/cli/bin.js'),'run','--config','e2e.config.ts','--output',out,...process.argv.slice(2)],{cwd:root,env,stdio:'inherit'});
  process.exitCode=await new Promise(r=>child.once('exit',c=>r(c??1)));
-}finally{chrome.kill('SIGTERM');await new Promise(r=>chrome.once('exit',r));await rm(profile,{recursive:true,force:true});}
+}finally{chrome.kill('SIGTERM');await new Promise(r=>chrome.once('exit',r));await rm(profile,{recursive:true,force:true,maxRetries:10,retryDelay:100});}

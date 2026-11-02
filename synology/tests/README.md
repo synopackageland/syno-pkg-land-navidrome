@@ -24,9 +24,10 @@ shared host interface changes can abort Chromium requests during other builds.
 Supply these private files in the parent
 of `synology/`, outside the public source:
 
-- `nas-target.json`: `{"url":"https://nas.example:5001","app":"https://nas.example:28543"}`
+- `nas-target.json`: `{"url":"https://nas.example:5001","app":"https://nas.example:5001/synopkgland/SynoPkgNavidrome/"}`
 - `nas-accounts.json`: an account file accepted by the CLI's `readAccount`, with
-  the `admin` and `reader` roles. These must be existing authorized test accounts.
+  the `admin` and `reader` roles. Set `DSM_E2E_ACCOUNT_ADMIN` and
+  `DSM_E2E_ACCOUNT_READER` to explicit private files to keep them outside the source. These must be existing authorized test accounts.
 
 Install the SPK, select a disposable music share containing `Acceptance.wav`,
 complete its read-only grant, and explicitly allow this App to the reader.
@@ -48,5 +49,6 @@ For denial acceptance, temporarily deny only this App to the reader, run with
 `NAVIDROME_E2E_EXPECT_DENIED=1` and `--grep denied`, then restore the original App
 rule and read it back. The test waits for the navigation's final 403, including
 DSM's asynchronous authorize bootstrap. Do not change DSM accounts or groups.
-Archive device reports/screenshots privately, restore permissions, uninstall the
-fixture package and remove only the explicitly owned test resources.
+Archive device reports/screenshots privately and restore permissions. For an
+in-place migration, retain the installed App and all pre-existing data; remove
+only the explicitly owned fixture files and shares created by the suite.

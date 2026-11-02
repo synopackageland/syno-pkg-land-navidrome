@@ -49,10 +49,11 @@ for k,v in plan.get('volumes',{}).items():v['name']=prefix+'-'+k
 # The package allocation and actual packaged command/initializer remain unchanged.
 compose=art/'runtime.json';compose.write_text(json.dumps(plan))
 cmd=['docker','compose','-f',str(compose),'-p',prefix]
+prefix_path='/synopkgland/SynoPkgNavidrome'
 base='http://'+lock['ingress']['address']+':4533'
 def request(path,headers=None,method='GET',body=None,timeout=20):
  data=None if body is None else json.dumps(body).encode()
- r=urllib.request.Request(base+path,data=data,headers=headers or {},method=method)
+ r=urllib.request.Request(base+(path if path == '/ping' or path.startswith('/_bridge/') or path.startswith(prefix_path+'/') else prefix_path+path),data=data,headers=headers or {},method=method)
  try:
   with urllib.request.urlopen(r,timeout=timeout) as res:return res.status,res.read()
  except urllib.error.HTTPError as e:return e.code,e.read()
