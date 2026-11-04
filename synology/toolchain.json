@@ -4,6 +4,6 @@
   "sdk": "0.50.7",
   "app": "0.50.7",
   "ui": null,
-  "executorTag": "executor/v0.48.0",
+  "executorTag": "executor/v0.49.5",
   "goToolchain": "go1.26.10"
 }
