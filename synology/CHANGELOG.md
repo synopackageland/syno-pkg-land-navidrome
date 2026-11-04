@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.64.2-0019
+
+- en: Fix DSM sign-in when opening over HTTP
+- zh-TW: 修正以 HTTP 開啟時的 DSM 登入
+- zh-CN: 修复通过 HTTP 打开时的 DSM 登录
+- ja: HTTP で開いた際の DSM サインインを修正
+- ko: HTTP로 열 때 DSM 로그인 문제 수정
+- de: DSM-Anmeldung beim Öffnen über HTTP korrigieren
+- fr: Corriger la connexion DSM lors de l’ouverture via HTTP
+
 ## 0.64.2-0017
 
 - en: Install wizard: port conflicts only warn; shared folder selection fixed
