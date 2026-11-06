@@ -7,3 +7,8 @@ evidence/
 compose.yaml
 __pycache__/
 .e2e/
+
+# Local secrets (never commit; keep them under synology/)
+.env
+.env.*
+!.env.example
