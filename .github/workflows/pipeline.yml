@@ -24,7 +24,7 @@ jobs:
       git_tag: ${{ steps.git-version.outputs.GIT_TAG }}
       git_sha: ${{ steps.git-version.outputs.GIT_SHA }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
           fetch-tags: true
@@ -62,7 +62,7 @@ jobs:
     name: Lint Go code
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
 
       - uses: actions/setup-go@v6
         with:
@@ -129,7 +129,7 @@ jobs:
     # PR-only gate is at step level: a job-level skip would propagate through
     # the needs chain (actions/runner#491) and skip all release jobs on tag pushes.
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
         if: github.event_name == 'pull_request'
         with:
           fetch-depth: 0
@@ -149,7 +149,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code into the Go module directory
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
 
       - uses: actions/setup-go@v6
         with:
@@ -182,7 +182,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code into the Go module directory
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
 
       - uses: actions/setup-go@v6
         id: setup-go
@@ -218,7 +218,7 @@ jobs:
     env:
       COVERAGE_COMMENT: 'false'
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
 
       - uses: actions/download-artifact@v8
         with:
@@ -255,7 +255,7 @@ jobs:
       FFMPEG_VERSION: "7.1"
       FFMPEG_REPOSITORY: navidrome/ffmpeg-windows-builds
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
 
       - uses: actions/setup-go@v6
         with:
@@ -327,7 +327,7 @@ jobs:
     env:
       NODE_OPTIONS: "--max_old_space_size=4096"
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
       - uses: actions/setup-node@v6
         with:
           node-version: 24
@@ -358,7 +358,7 @@ jobs:
     name: Lint i18n files
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
       - run: |
           set -e
           for file in resources/i18n/*.json; do
@@ -404,7 +404,7 @@ jobs:
           PLATFORM=$(echo ${{ matrix.platform }} | tr '/' '_')
           echo "PLATFORM=$PLATFORM" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
 
       - name: Prepare Docker Buildx
         uses: ./.github/actions/prepare-docker
@@ -493,7 +493,7 @@ jobs:
     env:
       REGISTRY_IMAGE: ghcr.io/${{ github.repository }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
 
       - name: Download digests
         uses: actions/download-artifact@v8
@@ -532,7 +532,7 @@ jobs:
         # Always push to DOCKER_HUB_REPO. The upstream repository also pushes to the navidrome/navidrome org repository.
         repository: ${{ fromJSON(github.repository == 'navidrome/navidrome' && format('["{0}","navidrome/navidrome"]', vars.DOCKER_HUB_REPO) || format('["{0}"]', vars.DOCKER_HUB_REPO)) }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
 
       - name: Download digests
         uses: actions/download-artifact@v8
@@ -585,7 +585,7 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
 
       - uses: actions/download-artifact@v8
         with:
@@ -619,7 +619,7 @@ jobs:
     outputs:
       package_list: ${{ steps.set-package-list.outputs.package_list }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
           fetch-tags: true
