@@ -1,6 +1,14 @@
 # Navidrome for DSM
 
 
+## 0.64.2-0021
+
+Temporary files use SDK disk scratch at `/tmp` (`TMPDIR=/tmp`; package UID,
+mode 0700, emptied at every container start) instead of a 32 MiB memory tmpfs.
+The startup adapter is still unpacked and executed from `/tmp`; the scratch
+mount allows execution. This build uses SDK/App 0.53.25, CLI 0.52.16, templates
+0.41.5 and executor v0.53.6. See [validation](docs/validation.md).
+
 ## 0.64.2-0020
 
 Select an existing music folder at any depth inside a supported local ACL share.
