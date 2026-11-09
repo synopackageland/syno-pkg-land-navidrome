@@ -7,13 +7,15 @@
     "check": "synopkgland check --json",
     "build": "synopkgland build --arch x86_64 --json",
     "inspect": "node scripts/inspect.mjs",
-    "e2e:smoke": "node --env-file-if-exists=.env node_modules/@synopackageland/cli/dist/e2e/dsm.js tunnel -- e2e run tests/e2e/smoke.e2e.ts --config e2e.smoke.config.ts"
+    "e2e:smoke": "node --env-file-if-exists=.env node_modules/@synopackageland/cli/dist/e2e/dsm.js tunnel -- e2e run tests/e2e/smoke.e2e.ts --config e2e.smoke.config.ts",
+    "test:folders": "node --test tests/folder-picker.test.mjs",
+    "test": "npm run test:folders"
   },
   "devDependencies": {
     "@ai-sdk/openai": "4.0.91",
     "@e2e-dev/web": "0.14.0",
-    "@synopackageland/cli": "0.48.13",
-    "@synopackageland/templates": "0.40.1",
+    "@synopackageland/cli": "~0.52.14",
+    "@synopackageland/templates": "0.41.5",
     "ai": "7.0.137",
     "e2e": "0.19.0",
     "playwright": "1.63.0"

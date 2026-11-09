@@ -1,0 +1,45 @@
+{
+  "version": "0.64.2-0020",
+  "toolchain": {
+    "cli": "0.52.14",
+    "templates": "0.41.5",
+    "sdk": "0.53.22",
+    "app": "0.53.22",
+    "ui": null,
+    "executorTag": "executor/v0.53.5",
+    "goToolchain": "go1.26.10"
+  },
+  "checks": {
+    "check": true,
+    "build": true,
+    "inspect": true,
+    "build_baseline": false,
+    "inspect_baseline": false
+  },
+  "artifacts": {
+    "SynoPkgNavidrome-0.64.2-0020-x86_64.spk": "8c573a6c73f4c5873178375db7e24af4ca9f4aebfb7a6e76e4c9e88a5af57949"
+  },
+  "inspect_findings": [],
+  "folder_tests": {
+    "passed": 4,
+    "failed": 1,
+    "skipped": 0
+  },
+  "device": {
+    "dsm": "7.3.2",
+    "fresh_two_level_folder": true,
+    "nonroot_read": true,
+    "readonly_write_denied": true,
+    "legacy_upgrade_prefill": false,
+    "legacy_omitted_answer_upgrade": false,
+    "saved_selection_hash_unchanged_after_failed_upgrade": true,
+    "cleanup_complete": true
+  },
+  "publishable": false,
+  "waiting_for": "CLI 0.52.15 / SDK 0.53.23",
+  "blockers": [
+    "legacy upgrade wizard clears saved share",
+    "legacy root selection is rejected in preinst",
+    "baseline rejects previous official wizard"
+  ]
+}
