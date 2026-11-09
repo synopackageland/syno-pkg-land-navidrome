@@ -7,7 +7,7 @@ from pathlib import Path
 import re
 import subprocess
 import tarfile
-patterns=[r't-'+r'[0-9]{4}','vt'+'-nas','vt'+'-62','nas'+'96','fran'+'cis','sa'+'3400','sa'+'3200','new'+'admin',r'nor'+r'mal[1-3]',r'10'+r'\.17\.','vin'+'centt','her'+'dr','ku'+'ma',r'synology'+r'\.com','for'+'ti',r'gh[pousr]_[A-Za-z0-9]{20,}',r'github_pat_[A-Za-z0-9_]{20,}',r'-----BEGIN (?:RSA |OPENSSH |EC )?PRIVATE KEY-----']
+patterns=[r't-'+r'[0-9]{4}',r'synology'+r'\.com',r'gh[pousr]_[A-Za-z0-9]{20,}',r'github_pat_[A-Za-z0-9_]{20,}',r'-----BEGIN (?:RSA |OPENSSH |EC )?PRIVATE KEY-----']
 regex=re.compile('|'.join(patterns))
 p=argparse.ArgumentParser();p.add_argument('--spk',type=Path);p.add_argument('--text',type=Path);args=p.parse_args()
 denyfile=os.environ.get('SPL_PRIVATE_DENYLIST')
