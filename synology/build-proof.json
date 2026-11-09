@@ -1,0 +1,46 @@
+{
+  "version": "0.64.2-0020",
+  "toolchain": {
+    "cli": "0.52.15",
+    "templates": "0.41.5",
+    "sdk": "0.53.23",
+    "app": "0.53.23",
+    "ui": null,
+    "executorTag": "executor/v0.53.5",
+    "goToolchain": "go1.26.10"
+  },
+  "checks": {
+    "check": true,
+    "build_baseline": true,
+    "inspect_baseline": true,
+    "build": true,
+    "inspect": true
+  },
+  "inspect_findings": [],
+  "approval_retention": "unknown",
+  "privileges_unchanged": true,
+  "container_policy_unchanged": true,
+  "artifacts": {
+    "SynoPkgNavidrome-0.64.2-0020-x86_64.spk": "0d1a74148127e160e7f974ca0a6ba5160fee104a1c257f111b072e67e77187bf"
+  },
+  "folder_tests": {
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0
+  },
+  "device": {
+    "dsm": "7.3.2",
+    "legacy_silent_upgrade": true,
+    "legacy_wizard_upgrade": true,
+    "original_share_root_kept": true,
+    "package_uid_kept": true,
+    "fixture_content_kept": true,
+    "nonroot_read": true,
+    "readonly_write_denied": true,
+    "effective_and_permitted_capabilities_zero": true,
+    "english_wizard_intro_and_heading": true,
+    "cleanup_complete": true
+  },
+  "review_ready": true,
+  "validation_scope": "Published dependency rebuild, historical baseline inspection, five folder/render regressions and two previous-official upgrades per App; broader suites and two-level fresh installation were not repeated"
+}

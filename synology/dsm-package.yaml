@@ -1,12 +1,12 @@
 schema: 2
 package: SynoPkgNavidrome
 version: 0.64.2
-build: 19
+build: 20
 displayname: Navidrome
 description: Stream your music collection through a web player or compatible apps
 maintainer: Navidrome
 metadata:
-  changelog: {"en": "Fix DSM sign-in when opening over HTTP", "zh-TW": "修正以 HTTP 開啟時的 DSM 登入", "zh-CN": "修复通过 HTTP 打开时的 DSM 登录", "ja": "HTTP で開いた際の DSM サインインを修正", "ko": "HTTP로 열 때 DSM 로그인 문제 수정", "de": "DSM-Anmeldung beim Öffnen über HTTP korrigieren", "fr": "Corriger la connexion DSM lors de l’ouverture via HTTP"}
+  changelog: {"en": "Select a media folder at any depth within a shared folder", "zh-TW": "可選取共享資料夾內任意層級的媒體資料夾", "zh-CN": "可选择共享文件夹内任意层级的媒体文件夹", "ja": "共有フォルダー内の任意の階層にあるメディアフォルダーを選択", "ko": "공유 폴더 내 모든 깊이의 미디어 폴더 선택 지원", "de": "Medienordner auf jeder Ebene eines freigegebenen Ordners auswählen", "fr": "Choisir un dossier multimédia à toute profondeur dans un dossier partagé", "es": "Seleccionar una carpeta multimedia a cualquier nivel dentro de una carpeta compartida", "it": "Seleziona una cartella multimediale a qualsiasi livello in una cartella condivisa"}
   maintainer_url: https://github.com/navidrome/navidrome
   distributor: Syno Package Land
   distributor_url: https://synopkgland.com/
@@ -16,14 +16,16 @@ arches: [x86_64]
 entry: app-privilege
 capabilities: {composeMounts: true}
 install:
-  sharedFolder: {mode: dedicated, key: music, name: Navidrome, permission: ro}
+  sharedFolder: {mode: select, key: music, permission: ro, picker: folder}
 compose:
-  sdk: 0.50.7
+  sdk: 0.53.23
   files: [compose.yaml]
   helpers: {x86_64: .build/helpers}
   shares:
     music:
       select: install
+      picker: folder
+      permission: ro
       mounts: [{service: navidrome, target: /music}]
   services:
     navidrome:
@@ -36,7 +38,7 @@ compose:
   network: {egress: internet}
 identity_gateway:
   upstream_auth_paths: [/rest, /share]
-  sdk: 0.50.7
+  sdk: 0.53.23
   mode: header
   access: dsm-users
   ingress: {path: /synopkgland/SynoPkgNavidrome/}
