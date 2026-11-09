@@ -2,7 +2,7 @@
 
 ## 0.64.2-0020
 
-Select media subfolders with SDK 0.53.22 and CLI 0.52.14; preserve read-only mounts
+Select media subfolders with SDK 0.53.23 and CLI 0.52.15; retain existing share selections on upgrade
 
 
 ## 0.64.2-0019

@@ -1,16 +1,13 @@
 # Navidrome for DSM
 
-This folder-picker candidate is blocked by legacy upgrade wizard prefill and
-CLI baseline compatibility; see [validation](docs/validation.md). Do not release it.
-
 
 ## 0.64.2-0020
 
 Select an existing music folder at any depth inside a supported local ACL share.
 The `/music` mount stays read-only, and private state stays in its named volume.
-This candidate uses SDK/App 0.53.22, CLI 0.52.14 and templates 0.41.5.
+This candidate uses SDK/App 0.53.23, CLI 0.52.15 and templates 0.41.5.
 See [folder selection](docs/folder-picker.md) and [validation](docs/validation.md)
-for upgrade compatibility and the current release blockers.
+for upgrade retention and the validation results.
 
 ## 0.64.2-0016
 

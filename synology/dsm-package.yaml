@@ -18,7 +18,7 @@ capabilities: {composeMounts: true}
 install:
   sharedFolder: {mode: select, key: music, permission: ro, picker: folder}
 compose:
-  sdk: 0.53.22
+  sdk: 0.53.23
   files: [compose.yaml]
   helpers: {x86_64: .build/helpers}
   shares:
@@ -38,7 +38,7 @@ compose:
   network: {egress: internet}
 identity_gateway:
   upstream_auth_paths: [/rest, /share]
-  sdk: 0.53.22
+  sdk: 0.53.23
   mode: header
   access: dsm-users
   ingress: {path: /synopkgland/SynoPkgNavidrome/}
