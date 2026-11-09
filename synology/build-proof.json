@@ -1,46 +1,51 @@
 {
-  "version": "0.64.2-0020",
+  "version": "0.64.2-0021",
   "toolchain": {
-    "cli": "0.52.15",
+    "cli": "0.52.16",
     "templates": "0.41.5",
-    "sdk": "0.53.23",
-    "app": "0.53.23",
+    "sdk": "0.53.25",
+    "app": "0.53.25",
     "ui": null,
-    "executorTag": "executor/v0.53.5",
+    "executorTag": "executor/v0.53.6",
     "goToolchain": "go1.26.10"
   },
   "checks": {
+    "bridge_tests": true,
+    "folder_tests": true,
+    "render": true,
     "check": true,
     "build_baseline": true,
     "inspect_baseline": true,
+    "verify": true,
     "build": true,
     "inspect": true
   },
   "inspect_findings": [],
   "approval_retention": "unknown",
   "privileges_unchanged": true,
-  "container_policy_unchanged": true,
   "artifacts": {
-    "SynoPkgNavidrome-0.64.2-0020-x86_64.spk": "0d1a74148127e160e7f974ca0a6ba5160fee104a1c257f111b072e67e77187bf"
+    "SynoPkgNavidrome-0.64.2-0021-x86_64.spk": "cd63f1fbc6dcb60f8c6efd446ba0183054577aa695cb796d805570ce5a23e8f2"
   },
-  "folder_tests": {
-    "passed": 5,
-    "failed": 0,
-    "skipped": 0
+  "temporary_files": {
+    "scratch": [
+      "/tmp"
+    ],
+    "tmpfs": [],
+    "TMPDIR": "/tmp",
+    "adapter_executes_from_tmp": true
   },
   "device": {
-    "dsm": "7.3.2",
-    "legacy_silent_upgrade": true,
-    "legacy_wizard_upgrade": true,
-    "original_share_root_kept": true,
-    "package_uid_kept": true,
-    "fixture_content_kept": true,
-    "nonroot_read": true,
-    "readonly_write_denied": true,
-    "effective_and_permitted_capabilities_zero": true,
-    "english_wizard_intro_and_heading": true,
+    "dsm": "7.4.1",
+    "upgrade_from": "0.64.2-0020",
+    "running": true,
+    "tmp_on_disk": true,
+    "tmp_mode": "0700",
+    "tmp_owner_package_uid": true,
+    "tmp_writable": true,
+    "ping_200": true,
+    "web_player_loaded": true,
     "cleanup_complete": true
   },
   "review_ready": true,
-  "validation_scope": "Published dependency rebuild, historical baseline inspection, five folder/render regressions and two previous-official upgrades per App; broader suites and two-level fresh installation were not repeated"
+  "validation_scope": "SDK 0.53.25 disk-scratch rebuild: bridge/folder tests, render, check, baseline build/inspect, verify and one previous-official upgrade on one DSM 7.4.1 device; broader suites were not repeated"
 }

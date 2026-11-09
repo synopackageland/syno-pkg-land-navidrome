@@ -24,8 +24,9 @@ service = {
    'ND_EXTAUTH_TRUSTEDSOURCES': '127.0.0.1/32', 'ND_EXTAUTH_LOGOUTURL': 'https://navidrome.invalid/_sso/logout',
    'ND_ENABLESHARING': 'true', 'ND_ENABLEUSEREDITING': 'true', 'ND_ENABLEINSIGHTS': 'false',
    'ND_SCANNER_SCHEDULE': '@every 1m', 'ND_LOGLEVEL': 'warn',
-   'BRIDGE_PEER': peer, 'BRIDGE_ADDRESS': address + ':4533'},
- 'read_only': True, 'tmpfs': ['/tmp:exec,nosuid,nodev,size=32m'],
+   'BRIDGE_PEER': peer, 'BRIDGE_ADDRESS': address + ':4533', 'TMPDIR': '/tmp'},
+ # /tmp is SDK disk scratch (dsm-package.yaml); the adapter runs from it.
+ 'read_only': True,
  'volumes': ['data:/var/tmp'], 'restart': 'unless-stopped',
  'ulimits': {'stack': {'soft': 33554432, 'hard': 33554432}}, 'mem_limit': '512m', 'stop_grace_period': '30s'
 }
