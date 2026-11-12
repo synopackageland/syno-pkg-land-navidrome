@@ -1,6 +1,15 @@
 # Navidrome for DSM
 
 
+## 0.64.2-0022: installation reliability
+
+Rebuilt with CLI 0.53.16. The ingress, gateway and Portal nginx reload is now
+declared only for package start and stop: INFO keeps
+`startstop_restart_services="nginx.service"` and no longer sets
+`instuninst_restart_services`. The install-time reload could collide with DSM
+`API.Info` and make Package Center show a `t.indexOf` error after installing.
+SDK, App runtime, upstream version and image are unchanged.
+
 ## 0.64.2-0021
 
 Temporary files use SDK disk scratch at `/tmp` (`TMPDIR=/tmp`; package UID,
