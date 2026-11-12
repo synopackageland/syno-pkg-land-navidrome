@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.64.2-0022
+
+- en: Improve installation reliability in Package Center
+- zh-TW: 提升在套件中心安裝的穩定性
+- zh-CN: 提升在套件中心安装的稳定性
+- ja: パッケージセンターでのインストールの安定性を向上
+- ko: 패키지 센터에서의 설치 안정성 향상
+- de: Zuverlässigkeit der Installation im Paket-Zentrum verbessern
+- fr: Améliorer la fiabilité de l’installation dans le Centre de paquets
+- es: Mejorar la fiabilidad de la instalación en el Centro de paquetes
+- it: Migliorare l’affidabilità dell’installazione nel Centro pacchetti
+
+Rebuilt with CLI 0.53.16. The ingress, gateway and Portal nginx reload is now
+declared only for package start and stop: INFO keeps
+`startstop_restart_services="nginx.service"` and no longer sets
+`instuninst_restart_services`. The install-time reload could collide with DSM
+`API.Info` and make Package Center show a `t.indexOf` error after installing.
+SDK, App runtime, upstream version and image are unchanged.
+
 ## 0.64.2-0021
 
 - en: Keep temporary files on disk instead of memory

@@ -1,7 +1,7 @@
 {
-  "version": "0.64.2-0021",
+  "version": "0.64.2-0022",
   "toolchain": {
-    "cli": "0.52.16",
+    "cli": "0.53.16",
     "templates": "0.41.5",
     "sdk": "0.53.25",
     "app": "0.53.25",
@@ -10,42 +10,31 @@
     "goToolchain": "go1.26.10"
   },
   "checks": {
-    "bridge_tests": true,
-    "folder_tests": true,
     "render": true,
     "check": true,
     "build_baseline": true,
     "inspect_baseline": true,
     "verify": true,
     "build": true,
-    "inspect": true
+    "inspect": true,
+    "bridge_tests": false,
+    "folder_tests": false
   },
   "inspect_findings": [],
   "approval_retention": "unknown",
   "privileges_unchanged": true,
   "artifacts": {
-    "SynoPkgNavidrome-0.64.2-0021-x86_64.spk": "cd63f1fbc6dcb60f8c6efd446ba0183054577aa695cb796d805570ce5a23e8f2"
-  },
-  "temporary_files": {
-    "scratch": [
-      "/tmp"
-    ],
-    "tmpfs": [],
-    "TMPDIR": "/tmp",
-    "adapter_executes_from_tmp": true
-  },
-  "device": {
-    "dsm": "7.4.1",
-    "upgrade_from": "0.64.2-0020",
-    "running": true,
-    "tmp_on_disk": true,
-    "tmp_mode": "0700",
-    "tmp_owner_package_uid": true,
-    "tmp_writable": true,
-    "ping_200": true,
-    "web_player_loaded": true,
-    "cleanup_complete": true
+    "SynoPkgNavidrome-0.64.2-0022-x86_64.spk": "cdc5e02a499fc3aabc56221c99a4a20ddf145e97c1f7b3e01a04d9cf02297dc5"
   },
   "review_ready": true,
-  "validation_scope": "SDK 0.53.25 disk-scratch rebuild: bridge/folder tests, render, check, baseline build/inspect, verify and one previous-official upgrade on one DSM 7.4.1 device; broader suites were not repeated"
+  "validation_scope": "CLI 0.53.16 fast rebuild: render, check, baseline build/inspect against 0.64.2-0021, verify and privacy scans; bridge/folder tests and device acceptance were not run",
+  "info_change": {
+    "removed": [
+      "instuninst_restart_services"
+    ],
+    "kept": {
+      "startstop_restart_services": "nginx.service"
+    },
+    "reason": "CLI 0.53.16 declares the nginx reload only for start and stop"
+  }
 }
